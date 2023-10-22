@@ -1,21 +1,25 @@
 import tw from 'twrnc'
 import React from 'react';
-import { StyleSheet, Text, View, Pressable, Image } from 'react-native';
-import { Dimensions } from "react-native";
-import Home from './screens/home';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Home from './screens/HomeScreen';
+import Form from './screens/FormScreen';
 
-var width = Dimensions.get('window').width; //full width
-var height = Dimensions.get('window').height; //full height
-
+const Stack = createNativeStackNavigator();
 export default function App() {
   return (
-    <Home/>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen 
+        name="Home" 
+        component={Home} 
+        options={{ title: 'Home page' }}
+        />
+        <Stack.Screen 
+        name="Form" 
+        component={Form}
+        options={{ title: 'Form page' }} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  box: {
-    backgroundColor: 'rgb(251, 191, 36)',
-    width: width,
-  }
-});

@@ -6,7 +6,7 @@ import { Dimensions } from "react-native";
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
-export default function Home() {
+export default function Home({ navigation }) {
   return (
     <View style={styles.box}>
       <View style={tw`flex flex-col mt-20 px-6 lg:px-8`}>
@@ -23,7 +23,7 @@ export default function Home() {
         <Pressable
           style={tw`flex w-full bg-white justify-center rounded-md border-2 border-amber-600 px-3 py-1.5 font-semibold leading-6  
           hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
-          onPress={() => console.log('Simple Button pressed')}
+          onPress={() => navigation.navigate('Form')}
         >
           <Text style={tw`text-black text-2xl font-bold mx-auto text-center`}>Componi il tuo Poke</Text>
         </Pressable>
@@ -36,5 +36,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgb(251, 191, 36)',
     width: width,
+    height: height,
+    maxHeight: '832px'
   }
 });

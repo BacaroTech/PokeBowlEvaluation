@@ -10,7 +10,7 @@ export default function Form() {
     return (
         <View style={tw`flex flex-col mt-20 px-6 lg:px-8`}>
             <View style={tw`sm:mx-auto sm:w-full sm:max-w-sm`}>
-                <Text style={tw`text-center text-5xl font-bold leading-9 tracking-tight text-gray-900 leading-relaxed`}>Evaluate your<br/>Poke Bowl</Text>
+                <Text style={tw`text-center text-5xl font-bold leading-9 tracking-tight text-gray-900 leading-relaxed`}>Evaluate your Poke Bowl</Text>
             </View>
         </View>
     );

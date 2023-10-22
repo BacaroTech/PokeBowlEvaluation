@@ -11,14 +11,14 @@ export default function Home({ navigation }) {
     <View style={styles.box}>
       <View style={tw`flex flex-col mt-20 px-6 lg:px-8`}>
         <View style={tw`sm:mx-auto sm:w-full sm:max-w-sm`}>
-          <Text style={tw`text-center text-5xl font-bold leading-9 tracking-tight text-gray-900 leading-relaxed`}>Evaluate your<br/>Poke Bowl</Text>
+          <Text style={tw`text-center text-5xl font-bold leading-9 tracking-tight text-gray-900 leading-relaxed`}>Evaluate your Poke Bowl</Text>
         </View>
       </View>
 
       <Image 
       source={require("../media/woke-logo.svg")} 
-      style={tw` w-100 h-100`}/>
-
+      style={tw`mx-auto w-100 h-100`}/>
+ 
       <View style={tw`w-50 mt-5 mx-auto`}>
         <Pressable
           style={tw`flex w-full bg-white justify-center rounded-md border-2 border-amber-600 px-3 py-1.5 font-semibold leading-6  

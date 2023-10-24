@@ -1,6 +1,6 @@
 import tw from 'twrnc'
 import {React, createElement } from 'react';
-import { StyleSheet, Text, View, Pressable, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Pressable, TextInput, Image } from 'react-native';
 import { Dimensions } from "react-native";
 import { useForm } from 'react-hook-form';
 import PokeForm from '../components/pokeForm'
@@ -14,9 +14,13 @@ export default function Form({ navigation }) {
         <View style={styles.box}>
             <View style={tw`flex flex-col mt-20 px-6 lg:px-8`}>
                 <View style={tw`sm:mx-auto sm:w-full sm:max-w-sm`}>
-                    <Text style={tw`text-center text-5xl font-bold leading-9 tracking-tight text-gray-900 leading-relaxed`}>Inserisci la tua Bowl</Text>
+                    <Text style={tw`text-center text-5xl font-bold leading-9 tracking-tight text-gray-900 leading-relaxed`}>Crea la tua Poke Bowl</Text>
                 </View>
             </View>
+
+            <Image 
+            source={require("../media/woke-logo.svg")} 
+            style={tw`mx-auto w-100 h-80`}/>
             <PokeForm/> 
         </View>
     )

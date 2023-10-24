@@ -4,6 +4,7 @@ import tw from 'twrnc'
 
 class PokeForm extends Component {
   constructor(props) {
+    console.log(props)
     super(props);
     this.state = {
       base: '',
@@ -47,10 +48,6 @@ class PokeForm extends Component {
 
   handleSalse2Change = (text) => {
     this.setState({ salsa2: text });
-  }
-
-  submitFormData = () => {
-    console.log(this.state)
   }
 
   render() {
@@ -165,7 +162,7 @@ class PokeForm extends Component {
             <Pressable
             style={tw`flex w-full bg-white justify-center rounded-md border-2 border-amber-600 px-3 py-1.5 font-semibold leading-6  
             hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mb-20`}
-            onPress={this.submitFormData}
+            onPress={() => this.props.navigation.navigate('Punteggi')}
             >
             <Text style={tw`text-black text-2xl font-bold mx-auto text-center`}>Calcola Punteggio</Text>
             </Pressable>

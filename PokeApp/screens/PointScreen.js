@@ -8,16 +8,15 @@ import PokeForm from '../components/pokeForm'
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
-export default function Form({ navigation }) {
+export default function Point() {
 
     return (
         <View style={styles.box}>
             <View style={tw`flex flex-col mt-20 px-6 lg:px-8`}>
                 <View style={tw`sm:mx-auto sm:w-full sm:max-w-sm`}>
-                    <Text style={tw`text-center text-5xl font-bold leading-9 tracking-tight text-gray-900 leading-relaxed`}>Inserisci la tua Bowl</Text>
+                    <Text style={tw`text-center text-5xl font-bold leading-9 tracking-tight text-gray-900 leading-relaxed`}>Punteggio</Text>
                 </View>
-            </View>
-            <PokeForm/> 
+            </View> 
         </View>
     )
 }

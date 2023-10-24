@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(251, 191, 36)',
     width: width,
     height: height,
-    maxHeight: '832px'
+    maxHeight: height,
+    fontFamily: "Verdana, Arial, Helvetica, sans-serif"
   }
 });

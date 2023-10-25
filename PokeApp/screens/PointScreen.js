@@ -2,12 +2,15 @@ import tw from 'twrnc'
 import {React, createElement } from 'react';
 import { StyleSheet, Text, View, Pressable, TextInput } from 'react-native';
 import { Dimensions } from "react-native";
+import { useRoute } from "@react-navigation/native"
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
 export default function Point() {
-
+    const route = useRoute()
+    const paramState = route.params?.paramState
+    console.log(paramState)
     return (
         <View style={styles.box}>
             <View style={tw`flex flex-col mt-20 px-6 lg:px-8`}>

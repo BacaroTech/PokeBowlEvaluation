@@ -23,7 +23,7 @@ export default function Home({ navigation }) {
         <Pressable
           style={tw`flex w-full bg-white justify-center rounded-md border-2 border-amber-600 px-3 py-1.5 font-semibold leading-6  
           hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
-          onPress={() => navigation.navigate('Form')}
+          onPress={() => {state: navigation.navigate('Form')}}
         >
           <Text style={tw`text-black text-2xl font-bold mx-auto text-center`}>Componi il tuo Poke</Text>
         </Pressable>

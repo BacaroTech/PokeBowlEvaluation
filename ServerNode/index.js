@@ -5,8 +5,12 @@ const app = express()
 const port = 3000
 
 //all routes
-const IngredientRouter = require('./ingredient')
+const IngredientRouter = require('./routes/ingredient')
+const UserRouter = require('./routes/user')
+const RecepiesRouter = require('./routes/recipes')
 app.use('/ingredient', IngredientRouter)
+app.use('/user', UserRouter)
+app.use('/recepies', RecepiesRouter)
 
 //connecting to db
 mongoose.connect(

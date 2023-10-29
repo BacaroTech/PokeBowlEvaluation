@@ -1,4 +1,5 @@
 # PokeBowlEvaluation
+questa app nasce con lo scopo di imparare a costruire applicazioni mobile con React Native, inoltre permettere agli utenti finali che la utilizzeranno di creare le proprie poke bowl, e di esse poter vedere l'impatto calorico e altre informazioni che aggiungeremo successivamente.
 
 ## AVVIO FRONTEND
 

@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './screens/HomeScreen';
 import Form from './screens/FormScreen';
 import Point from './screens/PointScreen';
+import Profile from './screens/ProfileScreen';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -24,6 +25,10 @@ export default function App() {
         name="Punteggio" 
         component={Point}
         options={{ title: 'Point page' }} />
+        <Stack.Screen 
+        name="Profilo" 
+        component={Profile}
+        options={{ title: 'Profile page' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

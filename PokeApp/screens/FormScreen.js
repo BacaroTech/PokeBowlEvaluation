@@ -1,8 +1,9 @@
 import tw from 'twrnc'
-import React from 'react';
-import { StyleSheet, Text, View, Pressable, TextInput, Image, SafeAreaView } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { StyleSheet, Text, View, Pressable, TextInput, Image, SafeAreaView} from 'react-native';
+import SelectDropdown from 'react-native-select-dropdown'
 import { Dimensions } from "react-native";
-import { useForm } from 'react-hook-form';
+import { getProteine } from "../api/ingredientsAPI"
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
@@ -19,8 +20,19 @@ export default function Form({ navigation }) {
     const [salsa1, handleSalse1Change] = React.useState('');
     const [salsa2, handleSalse2Change] = React.useState('');
 
+    let responseProteine;
+    useEffect(() => {
+        const loadData = async () => {
+            responseProteine = ((await getProteine()).data).map(x => x.Nome);
+            console.log(responseProteine);
+        }
+        loadData();
+    }, [])
+
+
     return (
-        <View style={styles.box}>
+        <View 
+        style={styles.box}>
             <View style={tw`flex flex-col mt-20 px-6 lg:px-8`}>
                 <View style={tw`sm:mx-auto sm:w-full sm:max-w-sm`}>
                     <Text style={tw`text-center text-5xl font-bold leading-9 tracking-tight text-gray-900 leading-relaxed`}>Crea la tua Poke Bowl</Text>
@@ -58,7 +70,24 @@ export default function Form({ navigation }) {
                     style={styles.description}
                 >Inserisci le proteine del tuo Poke
                 </Text>
-                <TextInput
+                <SelectDropdown
+                    data={responseProteine}
+                    onSelect={(selectedItem) => {
+                        console.log(selectedItem)
+                    }}
+                    buttonTextAfterSelection={(selectedItem) => {
+                        // text represented after item is selected
+                        // if data array is an array of objects then return selectedItem.property to render after item is selected
+                        return selectedItem
+                    }}
+                    rowTextForSelection={(item) => {
+                        // text represented for each item in dropdown
+                        // if data array is an array of objects then return item.property to represent item in dropdown
+                        return item
+                    }}
+                /> 
+                
+                {/*<TextInput
                     value={proteine1}
                     onChangeText={handleProteine1Change}
                     style={tw`w-80 bg-transparent border-2 border-amber-600 py-1.5 rounded-md
@@ -73,7 +102,7 @@ export default function Form({ navigation }) {
                             block flex-1 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6
                             text-xl font-medium mb-5`}
                     
-                />
+                />*/}
 
                 {/* Ingredienti*/}
                 <Text s
@@ -176,3 +205,21 @@ const styles = StyleSheet.create({
         width: 350
     }
 });
+
+/*
+<SelectDropdown
+                data={countries}
+                onSelect={(selectedItem, index) => {
+                    console.log(selectedItem, index)
+                }}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                    // text represented after item is selected
+                    // if data array is an array of objects then return selectedItem.property to render after item is selected
+                    return selectedItem
+                }}
+                rowTextForSelection={(item, index) => {
+                    // text represented for each item in dropdown
+                    // if data array is an array of objects then return item.property to represent item in dropdown
+                    return item
+                }}
+            /> */

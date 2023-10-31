@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View, Pressable, TextInput, Image, SafeAreaView} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown'
 import { Dimensions } from "react-native";
-import { getProteine } from "../api/ingredientsAPI"
+import { getProteine, getBasi, getIngredienti, getSalse } from "../api/ingredientsAPI"
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
@@ -11,20 +11,26 @@ var height = Dimensions.get('window').height; //full height
 export default function Form({ navigation }) {
 
     //form field
-    const [base, handleBaseChange] = React.useState('');
-    const [proteine1, handleProteine1Change] = React.useState('');
-    const [proteine2, handleProteine2Change] = React.useState('');
-    const [ing1, handleIng1Change] = React.useState('');
-    const [ing2, handleIng2Change] = React.useState('');
-    const [ing3, handleIng3Change] = React.useState('');
-    const [salsa1, handleSalse1Change] = React.useState('');
-    const [salsa2, handleSalse2Change] = React.useState('');
+    const [base, setBase] = React.useState();
+    const [proteine1, setProteine1] = React.useState();
+    const [proteine2, setProteine2] = React.useState();
+    const [ing1, setIng1] = React.useState();
+    const [ing2, setIng2] = React.useState();
+    const [ing3, setIng3] = React.useState();
+    const [salsa1, setSalsa1] = React.useState();
+    const [salsa2, setSalsa2] = React.useState();
 
-    let responseProteine;
+    //call api when page is loaded
+    const [responseProteine, setResponseProteine] = React.useState();
+    const [responseBase, setResponseBase] = React.useState();
+    const [responseIngredienti, setResponseIngredienti] = React.useState();
+    const [responseSalse, setResponseSalse] = React.useState();
     useEffect(() => {
         const loadData = async () => {
-            responseProteine = ((await getProteine()).data).map(x => x.Nome);
-            console.log(responseProteine);
+            setResponseProteine(((await getProteine()).data).map(x => x.Nome));
+            setResponseBase(((await getBasi()).data).map(x => x.Nome));
+            setResponseIngredienti(((await getIngredienti()).data).map(x => x.Nome));
+            setResponseSalse(((await getSalse()).data).map(x => x.Nome));
         }
         loadData();
     }, [])
@@ -42,7 +48,8 @@ export default function Form({ navigation }) {
             <Image
                 source={require("../media/woke-logo.svg")}
                 style={tw`mx-auto w-100 h-80`} />
-            <SafeAreaView style={tw`mx-5`}>
+            
+            <SafeAreaView style={tw`mx-5`}> 
                 {/* Base */}
                 <Text
                     style={tw`mx-0 text-black-900 text-2xl font-bold`}
@@ -52,14 +59,27 @@ export default function Form({ navigation }) {
                     style={styles.description}
                 >Inserisci la base del tuo Poke
                 </Text>
-                <TextInput
-                    value={base}
-                    onChangeText={handleBaseChange}
-                    style={tw`w-80 bg-transparent border-2 border-amber-600 py-1.5 rounded-md 
-                            block flex-1 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-black-200 focus:ring-0 sm:text-sm sm:leading-6
-                            text-xl font-medium mb-5`}
-                    
-                />
+                <SelectDropdown
+                    data={responseBase}
+                    defaultButtonText="Seleziona la tua base"
+                    buttonStyle={tw`bg-transparent border-2 border-amber-600 block w-full rounded-md py-1.5 shadow-sm 
+                    ring-1 ring-inset ring-gray-300 mb-10`}
+                    buttonTextStyle={tw`text-black block text-xl font-medium leading-6`}
+                    dropdownStyle={tw`block w-93 bg-white`}
+                    rowStyle={tw`py-2 text-sm text-gray-700 dark:text-gray-200`}
+                    rowTextStyle={tw`block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white`}
+                    onSelect={(selectedItem) => {
+                        console.log(selectedItem)
+                    }}
+                    buttonTextAfterSelection={(selectedItem) => {
+                        setBase(selectedItem)
+                        return selectedItem
+                    }}
+                    rowTextForSelection={(item) => {
+                        console.log(item)
+                        return item
+                    }}
+                /> 
 
                 {/* Proteine*/}
                 <Text s
@@ -72,37 +92,47 @@ export default function Form({ navigation }) {
                 </Text>
                 <SelectDropdown
                     data={responseProteine}
+                    defaultButtonText="Seleziona la tua prima proteina"
+                    buttonStyle={tw`bg-transparent border-2 border-amber-600 block w-full rounded-md py-1.5 shadow-sm 
+                    ring-1 ring-inset ring-gray-300 mb-10`}
+                    buttonTextStyle={tw`text-black block text-xl font-medium leading-6`}
+                    dropdownStyle={tw`block w-93 bg-white`}
+                    rowStyle={tw`py-2 text-sm text-gray-700 dark:text-gray-200`}
+                    rowTextStyle={tw`block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white`}
                     onSelect={(selectedItem) => {
                         console.log(selectedItem)
                     }}
                     buttonTextAfterSelection={(selectedItem) => {
-                        // text represented after item is selected
-                        // if data array is an array of objects then return selectedItem.property to render after item is selected
+                        setProteine1(selectedItem)
                         return selectedItem
                     }}
                     rowTextForSelection={(item) => {
-                        // text represented for each item in dropdown
-                        // if data array is an array of objects then return item.property to represent item in dropdown
+                        console.log(item)
                         return item
                     }}
                 /> 
-                
-                {/*<TextInput
-                    value={proteine1}
-                    onChangeText={handleProteine1Change}
-                    style={tw`w-80 bg-transparent border-2 border-amber-600 py-1.5 rounded-md
-                            block flex-1 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6
-                            text-xl font-medium mb-5`}
-                    
-                />
-                <TextInput
-                    value={proteine2}
-                    onChangeText={handleProteine2Change}
-                    style={tw`w-80 bg-transparent border-2 border-amber-600 py-1.5 rounded-md
-                            block flex-1 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6
-                            text-xl font-medium mb-5`}
-                    
-                />*/}
+
+                <SelectDropdown
+                    defaultButtonText="Seleziona la tua seconda proteina"
+                    buttonStyle={tw`bg-transparent border-2 border-amber-600 block w-full rounded-md py-1.5 shadow-sm 
+                    ring-1 ring-inset ring-gray-300 mb-10`}
+                    buttonTextStyle={tw`text-black block text-xl font-medium leading-6`}
+                    dropdownStyle={tw`block w-93 bg-white`}
+                    rowStyle={tw`py-2 text-sm text-gray-700 dark:text-gray-200`}
+                    rowTextStyle={tw`block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white`}
+                    data={responseProteine}
+                    onSelect={(selectedItem) => {
+                        console.log(selectedItem)
+                    }}
+                    buttonTextAfterSelection={(selectedItem) => {
+                        setProteine2(selectedItem)
+                        return selectedItem
+                    }}
+                    rowTextForSelection={(item) => {
+                        console.log(item)
+                        return item
+                    }}
+                /> 
 
                 {/* Ingredienti*/}
                 <Text s
@@ -113,30 +143,70 @@ export default function Form({ navigation }) {
                     style={styles.description}
                 >Inserisci le verdure, la frutta e tutte le altre liccorine che comporranno il tuo Poke
                 </Text>
-                <TextInput
-                    value={ing1}
-                    onChangeText={handleIng1Change}
-                    style={tw`w-80 bg-transparent border-2 border-amber-600 py-1.5 rounded-md
-                            block flex-1 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6
-                            text-xl font-medium mb-5`}
-                    
+                <SelectDropdown
+                    defaultButtonText="Seleziona il tuo primo ingrediente"
+                    buttonStyle={tw`bg-transparent border-2 border-amber-600 block w-full rounded-md py-1.5 shadow-sm 
+                    ring-1 ring-inset ring-gray-300 mb-10`}
+                    buttonTextStyle={tw`text-black block text-xl font-medium leading-6`}
+                    dropdownStyle={tw`block w-93 bg-white`}
+                    rowStyle={tw`py-2 text-sm text-gray-700 dark:text-gray-200`}
+                    rowTextStyle={tw`block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white`}
+                    data={responseIngredienti}
+                    onSelect={(selectedItem) => {
+                        console.log(selectedItem)
+                    }}
+                    buttonTextAfterSelection={(selectedItem) => {
+                        setIng1(selectedItem)
+                        return selectedItem
+                    }}
+                    rowTextForSelection={(item) => {
+                        console.log(item)
+                        return item
+                    }}
+                /> 
+                <SelectDropdown
+                    defaultButtonText="Seleziona il tuo secondo ingrediente"
+                    buttonStyle={tw`bg-transparent border-2 border-amber-600 block w-full rounded-md py-1.5 shadow-sm 
+                    ring-1 ring-inset ring-gray-300 mb-10`}
+                    buttonTextStyle={tw`text-black block text-xl font-medium leading-6`}
+                    dropdownStyle={tw`block w-93 bg-white`}
+                    rowStyle={tw`py-2 text-sm text-gray-700 dark:text-gray-200`}
+                    rowTextStyle={tw`block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white`}
+                    data={responseIngredienti}
+                    onSelect={(selectedItem) => {
+                        console.log(selectedItem)
+                    }}
+                    buttonTextAfterSelection={(selectedItem) => {
+                        setIng2(selectedItem)
+                        return selectedItem
+                    }}
+                    rowTextForSelection={(item) => {
+                        console.log(item)
+                        return item
+                    }}
                 />
-                <TextInput
-                    value={ing2}
-                    onChangeText={handleIng2Change}
-                    style={tw`w-80 bg-transparent border-2 border-amber-600 py-1.5 rounded-md
-                            block flex-1 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6
-                            text-xl font-medium mb-5`}
-                    
+                <SelectDropdown
+                    defaultButtonText="Seleziona il tuo terzo ingrediente"
+                    buttonStyle={tw`bg-transparent border-2 border-amber-600 block w-full rounded-md py-1.5 shadow-sm 
+                    ring-1 ring-inset ring-gray-300 mb-10`}
+                    buttonTextStyle={tw`text-black block text-xl font-medium leading-6`}
+                    dropdownStyle={tw`block w-93 bg-white`}
+                    rowStyle={tw`py-2 text-sm text-gray-700 dark:text-gray-200`}
+                    rowTextStyle={tw`block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white`}
+                    data={responseIngredienti}
+                    onSelect={(selectedItem) => {
+                        console.log(selectedItem)
+                    }}
+                    buttonTextAfterSelection={(selectedItem) => {
+                        setIng3(selectedItem)
+                        return selectedItem
+                    }}
+                    rowTextForSelection={(item) => {
+                        console.log(item)
+                        return item
+                    }}
                 />
-                <TextInput
-                    value={ing3}
-                    onChangeText={handleIng3Change}
-                    style={tw`w-80 bg-transparent border-2 border-amber-600 py-1.5 rounded-md
-                            block flex-1 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6
-                            text-xl font-medium mb-5`}
-                    
-                />
+                
 
                 {/* Salse*/}
                 <Text s
@@ -147,22 +217,48 @@ export default function Form({ navigation }) {
                     style={styles.description}
                 >Inserisci le salse che vuoi mettere nel tuo Poke
                 </Text>
-                <TextInput
-                    value={salsa1}
-                    onChangeText={handleSalse1Change}
-                    style={tw`w-80 bg-transparent border-2 border-amber-600 py-1.5 rounded-md
-                            block flex-1 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6
-                            text-xl font-medium mb-5`}
-                    
-                />
-                <TextInput
-                    value={salsa2}
-                    onChangeText={handleSalse2Change}
-                    style={tw`w-80 bg-transparent border-2 border-amber-600 py-1.5 rounded-md
-                            block flex-1 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6
-                            text-xl font-medium mb-5`}
-                    
-                />
+                <SelectDropdown
+                    defaultButtonText="Seleziona la tua prima salsa"
+                    buttonStyle={tw`bg-transparent border-2 border-amber-600 block w-full rounded-md py-1.5 shadow-sm 
+                    ring-1 ring-inset ring-gray-300 mb-10`}
+                    buttonTextStyle={tw`text-black block text-xl font-medium leading-6`}
+                    dropdownStyle={tw`block w-93 bg-white`}
+                    rowStyle={tw`py-2 text-sm text-gray-700 dark:text-gray-200`}
+                    rowTextStyle={tw`block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white`}
+                    data={responseSalse}
+                    onSelect={(selectedItem) => {
+                        console.log(selectedItem)
+                    }}
+                    buttonTextAfterSelection={(selectedItem) => {
+                        setSalsa1(selectedItem)
+                        return selectedItem
+                    }}
+                    rowTextForSelection={(item) => {
+                        console.log(item)
+                        return item
+                    }}
+                /> 
+                <SelectDropdown
+                    defaultButtonText="Seleziona la tua seconda salsa"
+                    buttonStyle={tw`bg-transparent border-2 border-amber-600 block w-full rounded-md py-1.5 shadow-sm 
+                    ring-1 ring-inset ring-gray-300 mb-10`}
+                    buttonTextStyle={tw`text-black block text-xl font-medium leading-6`}
+                    dropdownStyle={tw`block w-93 bg-white`}
+                    rowStyle={tw`py-2 text-sm text-gray-700 dark:text-gray-200`}
+                    rowTextStyle={tw`block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white`}
+                    data={responseSalse}
+                    onSelect={(selectedItem) => {
+                        console.log(selectedItem)
+                    }}
+                    buttonTextAfterSelection={(selectedItem) => {
+                        setSalsa2(selectedItem)
+                        return selectedItem
+                    }}
+                    rowTextForSelection={(item) => {
+                        console.log(item)
+                        return item
+                    }}
+                /> 
 
                 {/* Submit */}
                 <View style={tw`w-50 mt-5 mx-auto`}>
@@ -205,21 +301,3 @@ const styles = StyleSheet.create({
         width: 350
     }
 });
-
-/*
-<SelectDropdown
-                data={countries}
-                onSelect={(selectedItem, index) => {
-                    console.log(selectedItem, index)
-                }}
-                buttonTextAfterSelection={(selectedItem, index) => {
-                    // text represented after item is selected
-                    // if data array is an array of objects then return selectedItem.property to render after item is selected
-                    return selectedItem
-                }}
-                rowTextForSelection={(item, index) => {
-                    // text represented for each item in dropdown
-                    // if data array is an array of objects then return item.property to represent item in dropdown
-                    return item
-                }}
-            /> */

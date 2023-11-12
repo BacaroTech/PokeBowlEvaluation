@@ -16,13 +16,23 @@ router.post("/login", jsonParser, async (req, res) => {
   }
 })
 
-router.post("/createEmployer", jsonParser, async(req, res) => {
-  let newEmployer = await User.insertMany(req.body)
-  if(newEmployer && newEmployer.length > 0){
-    res.status(200).send({message: newEmployer});
-  }else{
+router.post("/register", jsonParser, async(req, res) => {
+  let replaceUser = await User.find({Nome: req.body.Nome, Mail: req.body.Mail});
+  console.log(replaceUser);
+  
+  if(replaceUser && replaceUser.length > 0)
     res.status(500).send({message: "an error occurred"});
+  else{
+    let newUser = await User.insertMany(req.body)
+    if(newUser && newUser.length > 0){
+      res.status(200).send({message: newUser});
+    }else{
+      res.status(500).send({message: "an error occurred"});
+    }
   }
+  
 })
+
+
 
 module.exports = router;

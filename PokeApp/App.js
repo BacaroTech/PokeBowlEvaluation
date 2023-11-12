@@ -6,6 +6,7 @@ import Home from './screens/HomeScreen';
 import Form from './screens/FormScreen';
 import Point from './screens/PointScreen';
 import Profile from './screens/ProfileScreen';
+import Register from './screens/RegisterScreen';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -29,6 +30,10 @@ export default function App() {
         name="Profilo" 
         component={Profile}
         options={{ title: 'Profile page' }} />
+        <Stack.Screen 
+        name="Register" 
+        component={Register}
+        options={{ title: 'Register page' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

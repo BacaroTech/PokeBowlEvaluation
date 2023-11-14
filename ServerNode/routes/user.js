@@ -9,10 +9,10 @@ router.post("/login", jsonParser, async (req, res) => {
     Mail: req.body.Mail,
     Password: req.body.Password
   })
-  if(userFound){
+  if(userFound && userFound.length > 0){
     res.status(200).send({message: userFound[0].Nome});
   }else{
-    res.status(500).send({message: "user not found"});
+    res.status(400).send({message: "user not found"});
   }
 })
 

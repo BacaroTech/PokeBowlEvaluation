@@ -10,7 +10,7 @@ router.post("/login", jsonParser, async (req, res) => {
     Password: req.body.Password
   })
   if(userFound && userFound.length > 0){
-    res.status(200).send({message: userFound[0].Nome});
+    res.status(200).send({message: userFound[0]});
   }else{
     res.status(400).send({message: "user not found"});
   }
@@ -25,7 +25,7 @@ router.post("/register", jsonParser, async(req, res) => {
   else{
     let newUser = await User.insertMany(req.body)
     if(newUser && newUser.length > 0){
-      res.status(200).send({message: newUser});
+      res.status(200).send({message: newUser[0]});
     }else{
       res.status(500).send({message: "an error occurred"});
     }

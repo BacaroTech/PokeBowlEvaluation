@@ -12,22 +12,31 @@ export default function Register({ navigation }) {
     const [user, setUser] = React.useState("");
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
+    const [mailValid, setMailValid] = React.useState(true);
+    const [register, setRegister] = React.useState(true);
 
-    function insertUserAndGoHome(){
+    function insertUserAndGoProfile(){
         try{
             if(validateEmail(email)){
                 let userInsert = postInsetUser({name: user, email: email, password: password});
                 userInsert.then((data) => {
                     console.log(data);
                     if(data != undefined){
-                        navigation.navigate('Form');
+                        navigation.navigate('Profilo', {paramState: {
+                            userName: data.data.message.Nome,
+                            userEmail: data.data.message.Mail
+                        }});
+                    }else{
+                        setRegister(false);
                     }
                 }).catch((error) => {
-                    console.log(error);
+                    console.error(error);
                 })
+            }else{
+                setMailValid(false)
             }
         }catch(error){
-            console.log("error call api, message: " + error);
+            console.error("error call api, message: " + error);
         }
     }
 
@@ -35,12 +44,13 @@ export default function Register({ navigation }) {
         console.log(text);
         let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
         if (reg.test(text) === false) {
-            console.log("Email is Not Correct");
+            console.error("Email is Not Correct");
+            return false;
         }
         else {
             console.log("Email is Correct");
+            return true;
         }
-        return reg.test(text);
       }
 
     return (
@@ -50,6 +60,20 @@ export default function Register({ navigation }) {
                     <Text style={tw`text-center text-5xl font-bold leading-9 tracking-tight text-gray-900 leading-relaxed`}>Registrati e crea le tue super Poke Bowl!</Text>
                 </View>
             </View>
+
+            {!mailValid && 
+                <View style={tw`bg-red-100 border border-red-400 px-4 py-3 mx-5 rounded relative`}>
+                    <Text style={tw`text-red-700 font-bold`}>
+                        La mail non è formattata correttamente!
+                    </Text>
+                </View>}
+
+            {!register && 
+                <View style={tw`bg-red-100 border border-red-400 px-4 py-3 mx-5 rounded relative`}>
+                    <Text style={tw`text-red-700 font-bold`}>
+                        Registrazione non riuscita, riprovare!
+                    </Text>
+                </View>}
 
             <SafeAreaView style={tw`mx-5`}> 
                 <Text
@@ -88,7 +112,7 @@ export default function Register({ navigation }) {
                         style={tw`flex w-full bg-white justify-center rounded-md border-2 border-amber-600 mt-10 px-3 py-1.5 font-semibold leading-6  
                                 hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 
                                 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mb-20`}
-                        onPress={() => insertUserAndGoHome()}
+                        onPress={() => insertUserAndGoProfile()}
                     >
                         <Text style={tw`text-black text-2xl font-bold mx-auto text-center`}>Registrati</Text>
                     </Pressable>

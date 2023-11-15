@@ -11,6 +11,7 @@ var height = Dimensions.get('window').height; //full height
 export default function Login({ navigation }) {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
+    const [autenticate, setAutenticate] = React.useState(true);
 
     function login(){
         try{
@@ -18,7 +19,13 @@ export default function Login({ navigation }) {
             userLogin.then(data => {
                 console.log(data);
                 if(data != undefined){
-                    navigation.navigate('Profilo');
+                    navigation.navigate('Profilo', {paramState: {
+                        userName: data.data.message.Nome,
+                        userEmail: data.data.message.Mail
+                    }});
+                    setAutenticate(true);
+                }else{
+                    setAutenticate(false);
                 }
             }).catch(error => {
                 console.log(error);
@@ -36,6 +43,13 @@ export default function Login({ navigation }) {
                     <Text style={tw`text-center text-5xl font-bold leading-9 tracking-tight text-gray-900 leading-relaxed`}>Bentornato/a!</Text>
                 </View>
             </View>
+
+            {!autenticate && 
+                <View style={tw`bg-red-100 border border-red-400 px-4 py-3 mx-5 rounded relative`}>
+                    <Text style={tw`text-red-700 font-bold`}>
+                        Autenticazione non riuscita, riprovare!
+                    </Text>
+                </View>}
 
             <SafeAreaView style={tw`mx-5`}> 
                 
@@ -70,6 +84,8 @@ export default function Login({ navigation }) {
                         <Text style={tw`text-black text-2xl font-bold mx-auto text-center`}>Accedi</Text>
                     </Pressable>
                 </View>
+
+                {}
             </SafeAreaView>
     
         </View>

@@ -2,18 +2,31 @@ import tw from 'twrnc'
 import React from 'react';
 import { StyleSheet, Text, View, Pressable, Image, TouchableHighlight } from 'react-native';
 import { Dimensions } from "react-native";
+import { useRoute } from "@react-navigation/native"
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
 export default function Profile({ navigation }) {
+  const route = useRoute()
+  const paramState = route.params?.paramState //param mpassed by prev form
+  console.log(paramState)
+
   return (
     <View style={styles.box}>
         <View style={tw`flex flex-col mt-20 px-6 lg:px-8`}>
           <View style={tw`sm:mx-auto sm:w-full sm:max-w-sm`}>
-              <Text style={tw`text-center text-5xl font-bold leading-9 tracking-tight text-gray-900 leading-relaxed`}>La tua area</Text>
+            <Text style={tw`text-center text-5xl font-bold leading-9 tracking-tight text-gray-900 leading-relaxed`}>Ben tornato/a {paramState.userName}</Text>
           </View>
         </View>
+
+        <View style={tw`flex flex-col mt-10 px-6 lg:px-8`}>
+          <Text style={tw`text-center text-3xl font-bold leading-9 tracking-tight text-gray-900 leading-relaxed`}>
+              Le tue ricette precedenti!
+          </Text>
+          work in progress...
+        </View>
+
         <View style={tw`w-50 mt-5 mx-auto`}>
           <Pressable
               style={tw`flex w-full bg-white justify-center rounded-md border-2 border-amber-600 mt-10 px-3 py-1.5 font-semibold leading-6  
